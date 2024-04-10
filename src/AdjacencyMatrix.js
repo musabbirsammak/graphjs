@@ -4,9 +4,10 @@ class AdjacencyMatrix {
      * @param {number} numOfVertices Maximum number of vertices in the graph
      * @param {boolean} isDirected Whether the graph is directed. Default is false
      */
-    constructor(numOfVertices, isDirected=false) {
-        this.matrix = Array(numOfVertices).fill(0).map(() => Array(numOfVertices).fill(0));
+    constructor(numOfVertices, isDirected=false, isWeighted=false) {
+        this.matrix = Array(numOfVertices).fill(0).map(() => Array(numOfVertices).fill(Number.MIN_VALUE));
         this.isDirected = isDirected;
+        this.isWeighted = isWeighted;
         this.vertices = numOfVertices;
         this.edges = 0;
     }
@@ -16,13 +17,13 @@ class AdjacencyMatrix {
      * @param {number} from Source vertex
      * @param {number} to Destination vertex
      */
-    addEdge(from, to) {
+    addEdge(from, to, weight = 1) {
         this._validateVertex(from);
         this._validateVertex(to);
 
-        this.matrix[from][to] = 1;
+        this.matrix[from][to] = weight;
         if (!this.isDirected) {
-            this.matrix[to][from] = 1;
+            this.matrix[to][from] = weight;
         }
 
         this.edges++;
@@ -37,10 +38,10 @@ class AdjacencyMatrix {
         this._validateVertex(from);
         this._validateVertex(to);
 
-        if (this.matrix[from][to] !== 0) {
-            this.matrix[from][to] = 0;
+        if (this.matrix[from][to] !== Number.MIN_VALUE) {
+            this.matrix[from][to] = Number.MIN_VALUE;
             if (!this.isDirected) {
-                this.matrix[to][from] = 0;
+                this.matrix[to][from] = Number.MIN_VALUE;
             }
             this.edges--;
         }
@@ -53,7 +54,7 @@ class AdjacencyMatrix {
      * @returns {boolean} true if there is an edge between the vertices, false otherwise
      */
     hasEdge(from, to) {
-        return this.matrix[from][to];
+        return this.matrix[from][to] !== Number.MIN_VALUE;
     }
 
     /**
