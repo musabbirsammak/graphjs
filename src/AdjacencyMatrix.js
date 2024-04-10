@@ -21,7 +21,7 @@ class AdjacencyMatrix {
         this._validateVertex(to);
 
         this.matrix[from][to] = 1;
-        if (this.isDirected) {
+        if (!this.isDirected) {
             this.matrix[to][from] = 1;
         }
 
@@ -39,7 +39,7 @@ class AdjacencyMatrix {
 
         if (this.matrix[from][to] !== 0) {
             this.matrix[from][to] = 0;
-            if (this.isDirected) {
+            if (!this.isDirected) {
                 this.matrix[to][from] = 0;
             }
             this.edges--;
