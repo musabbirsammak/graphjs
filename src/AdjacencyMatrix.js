@@ -89,7 +89,7 @@ class AdjacencyMatrix {
     neighbours(vertex) {
         this._validateVertex(vertex);
 
-        adjacents = [];
+        let adjacents = [];
         for (let i = 0; i < this.vertices; i++) {
             if (this.hasEdge(vertex, i)) {
                 adjacents.push(i);
@@ -116,3 +116,5 @@ class AdjacencyMatrix {
         console.table(this.matrix);
     }
 }
+
+module.exports = AdjacencyMatrix;
